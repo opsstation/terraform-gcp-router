@@ -8,10 +8,13 @@ provider "google" {
 #### vpc module call.
 ####==============================================================================
 module "vpc" {
-  source                                    = "git::git@github.com:opsstation/terraform-gcp-vpc.git?ref=master"
-  name                                      = "app"
+  source                                    = "git::git@github.com:opsstation/terraform-gcp-vpc.git?ref=v1.0.0"
+  name                                      = "dev"
   environment                               = "test"
+  label_order                               = ["name", "environment"]
+  routing_mode                              = "REGIONAL"
   network_firewall_policy_enforcement_order = "AFTER_CLASSIC_FIREWALL"
+  delete_default_routes_on_create           = false
 }
 
 ####==============================================================================
@@ -19,7 +22,7 @@ module "vpc" {
 ####==============================================================================
 module "cloud_router" {
   source                          = "../../"
-  name                            = "app"
+  name                            = "dev"
   environment                     = "test"
   region                          = "asia-northeast1"
   network                         = module.vpc.vpc_id
