@@ -12,6 +12,7 @@ module "vpc" {
   name                                      = "dev"
   environment                               = "test"
   label_order                               = ["name", "environment"]
+  mtu                                       = 1460
   routing_mode                              = "REGIONAL"
   network_firewall_policy_enforcement_order = "AFTER_CLASSIC_FIREWALL"
   delete_default_routes_on_create           = false
